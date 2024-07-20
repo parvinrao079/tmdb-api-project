@@ -20,6 +20,7 @@ const options = {
                 const poster = document.createElement("img");
                 const imageSize = "w200" //determines the width of the poster
                 poster.src = 'https://image.tmdb.org/t/p/' + imageSize + element.poster_path;
+                poster.alt = element.title;
                 movieCard.appendChild(poster);
                 const title = document.createElement("h1");
                 title.textContent = element.title;
@@ -55,6 +56,7 @@ searchButton.addEventListener("click", async () => {
             const poster = document.createElement("img");
             const imageSize = "w200" //determines the width of the poster
             poster.src = 'https://image.tmdb.org/t/p/' + imageSize + element.poster_path;
+            poster.alt = element.title;
             movieCard.appendChild(poster);
             const title = document.createElement("h1");
             title.textContent = element.title;
