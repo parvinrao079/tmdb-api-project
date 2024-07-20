@@ -62,6 +62,13 @@ searchButton.addEventListener("click", async () => {
             const overview = document.createElement("p");
             overview.textContent = element.overview;
             movieCard.appendChild(overview);
+            const favoriteButton = document.createElement("button");
+                favoriteButton.textContent = "Add to Favorites";
+                favoriteButton.addEventListener("click", () => {
+                    const previousData = JSON.parse(localStorage.getItem('favorites')) || [];
+                    localStorage.setItem('favorites', JSON.stringify([...previousData, element]));
+                })
+                movieCard.appendChild(favoriteButton);
             container.appendChild(movieCard);
             //console.log(element)
         });
