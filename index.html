@@ -6,16 +6,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Movie Diary</title>
 </head>
-<body class="bg-white">
+<body>
     <header>
         <h1>Your Movie Diary</h1>
         <nav>
             <ul id="navlinks">
-                <li> Home</li>
+                <li>Home</li>
                 <li>Favorites</li>
             </ul>
         </nav>
     </header>
+    <main>
+        <div id="search-bar">
+            <input id="search" type="text" placeholder="Search for movies here">
+            <button id="submit-search">Search</button>
+        </div>
+        <div id="movie-container" class="grid grid-cols-3 gap-4"></div>
+    </main>
     <script src="main.js"></script>
 </body>
 </html>
