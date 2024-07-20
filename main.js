@@ -76,11 +76,3 @@ searchButton.addEventListener("click", async () => {
         console.error(error);
     }
 })
-
-function addFavoriteButton () {
-    const button = document.createElement("button");
-    button.textContent = "Add to Favorites";
-    button.addEventListener("click", () => {
-
-    })
-}
