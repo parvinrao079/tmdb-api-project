@@ -3,37 +3,6 @@ const searchButton = document.getElementById("submit-search");
 const searchInput = document.getElementById("search");
 
 
-// Selecting carousel elements
-const track = document.querySelector('.carousel-track');
-const prevButton = document.getElementById('prev');
-const nextButton = document.getElementById('next');
-let currentIndex = 0;
-
-// Function to update carousel position
-function updateCarousel() {
-    const itemWidth = document.querySelector('.carousel-item').clientWidth;
-    track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-}
-
-// Event listener for previous button
-prevButton.addEventListener('click', () => {
-    if (currentIndex > 0) {
-        currentIndex--;
-        updateCarousel();
-    }
-});
-
-// Event listener for next button
-nextButton.addEventListener('click', () => {
-    if (currentIndex < track.children.length - 3) {
-        currentIndex++;
-        updateCarousel();
-    }
-});
-
-// Update carousel position on window resize
-window.addEventListener('resize', updateCarousel);
-
 const options = {
     method: 'GET',
     headers: {
@@ -50,11 +19,12 @@ const options = {
             //console.log(data)
             data.results.forEach(element => {
                 const movieCard = document.createElement("div");
-                movieCard.classList = "carousel-item flex flex-col max-w-min rounded overflow-hidden shadow-lg bg-gray-800 m-2 py-4";
+                movieCard.classList.add('bg-gray-800', 'p-4', 'rounded', 'shadow-md');
                 const poster = document.createElement("img");
                 const imageSize = "w500" //determines the width of the poster
                 poster.src = 'https://image.tmdb.org/t/p/' + imageSize + element.poster_path;
                 poster.alt = element.title;
+                poster.classList.add('w-30', 'h-auto', 'mx-auto');
                 movieCard.appendChild(poster);
                 const title = document.createElement("h1");
                 title.textContent = element.title;
@@ -83,8 +53,6 @@ const options = {
 searchButton.addEventListener("click", async () => {
     container.replaceChildren();
     const query = searchInput.value.replaceAll(" ","%20");
-    nextButton.classList.add("hidden");
-    prevButton.classList.add("hidden");
     try {
         const res = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`, options);
         if (!res.ok) throw new Error('Something went wrong');
@@ -94,13 +62,13 @@ searchButton.addEventListener("click", async () => {
             container.innerHTML = '<p class="text-center text-xl col-span-3">No results. Try modifying your search terms.</p>';
         } else {
             data.results.forEach(element => {
-                container.classList = "grid grid grid-cols-3 gap-4"
                 const movieCard = document.createElement("div");
-                movieCard.classList = "flex flex-col rounded shadow-lg bg-gray-800 m-2 py-4";
+                movieCard.classList.add('bg-gray-800', 'p-4', 'rounded', 'shadow-md');
                 const poster = document.createElement("img");
                 const imageSize = "w300" //determines the width of the poster
                 poster.src = 'https://image.tmdb.org/t/p/' + imageSize + element.poster_path;
                 poster.alt = element.title;
+                poster.classList.add('w-30', 'h-auto', 'mx-auto');
                 movieCard.appendChild(poster);
                 const title = document.createElement("h1");
                 title.textContent = element.title;
