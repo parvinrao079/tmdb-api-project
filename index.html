@@ -5,21 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Movie Diary</title>
-    <style>
-        .carousel {
-            display: flex;
-            overflow: hidden;
-        }
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-        .carousel-item {
-            flex: 0 0 8.5%; /* ширина каждого элемента карусели */
-            box-sizing: border-box;
-            max-width: 8.5%;
-        }
-    </style>
 </head>
 <body class="bg-gray-900 text-white">
     <!-- Header section -->
@@ -41,118 +26,8 @@
                 Search
             </button>
         </div>
-        
-        <!-- Movie carousel -->
-        <div class="relative">
-            <!-- Previous button -->
-            <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded z-10">Prev</button>
-
-            <!-- Carousel track -->
-            <div class="carousel w-full overflow-hidden">
-                <div class="carousel-track flex" id="movie-container"></div>
-            </div>
-
-            <!-- Next button -->
-            <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">Next</button>
-        </div>
+            <div class="grid grid-cols-3 gap-4" id="movie-container"></div>
     </main>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const track = document.querySelector('.carousel-track');
-            const prevButton = document.getElementById('prev');
-            const nextButton = document.getElementById('next');
-            const searchButton = document.getElementById('submit-search');
-            const searchInput = document.getElementById('search');
-            const options = {
-                method: 'GET',
-                headers: {
-                    accept: 'application/json',
-                    Authorization: 'Bearer YOUR_ACCESS_TOKEN_HERE'
-                }
-            };
-            let currentIndex = 0;
-
-            async function fetchMovies(url) {
-                try {
-                    const res = await fetch(url, options);
-                    if (!res.ok) throw new Error('Failed to fetch movies');
-                    return await res.json();
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-
-            function renderMovies(movies) {
-                track.innerHTML = '';
-                movies.forEach(movie => {
-                    const movieCard = document.createElement('div');
-                    movieCard.classList = "carousel-item flex flex-col rounded overflow-hidden shadow-lg bg-gray-800 m-2 py-4";
-                    
-                    const poster = document.createElement('img');
-                    const imageSize = "w500";
-                    poster.src = `https://image.tmdb.org/t/p/${imageSize}${movie.poster_path}`;
-                    poster.alt = movie.title;
-                    movieCard.appendChild(poster);
-
-                    const title = document.createElement('h1');
-                    title.textContent = movie.title;
-                    title.classList = "p-4 font-bold text-xl mb-2 text-yellow-400";
-                    movieCard.appendChild(title);
-
-                    const overview = document.createElement('p');
-                    overview.textContent = movie.overview;
-                    overview.classList = "text-gray-300 text-base p-4";
-                    movieCard.appendChild(overview);
-
-                    const favoriteButton = document.createElement('button');
-                    favoriteButton.textContent = "Add to Favorites";
-                    favoriteButton.addEventListener("click", () => {
-                        const previousData = JSON.parse(localStorage.getItem('favorites')) || [];
-                        localStorage.setItem('favorites', JSON.stringify([...previousData, movie]));
-                    });
-                    favoriteButton.classList = "bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold max-w-fit py-2 px-4 m-4 rounded";
-                    movieCard.appendChild(favoriteButton);
-
-                    track.appendChild(movieCard);
-                });
-                updateCarousel();
-            }
-
-            function updateCarousel() {
-                const itemWidth = document.querySelector('.carousel-item').clientWidth;
-                track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-            }
-
-            prevButton.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updateCarousel();
-                }
-            });
-
-            nextButton.addEventListener('click', () => {
-                if (currentIndex < track.children.length - 3) {
-                    currentIndex++;
-                    updateCarousel();
-                }
-            });
-
-            window.addEventListener('resize', updateCarousel);
-
-            searchButton.addEventListener('click', async () => {
-                const query = searchInput.value.replaceAll(" ", "%20");
-                const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`;
-                const data = await fetchMovies(url);
-                if (data && data.results) renderMovies(data.results);
-            });
-
-            // Initial load of popular movies
-            const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
-            fetchMovies(url).then(data => {
-                if (data && data.results) renderMovies(data.results);
-            });
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
