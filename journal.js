@@ -8,7 +8,7 @@ const options = {
 
 document.addEventListener('DOMContentLoaded', () => {
     const favoritesContainer = document.getElementById('favorites-container');
-    const favoriteMovies = JSON.parse(localStorage.getItem('favorites')) || [];
+    let favoriteMovies = JSON.parse(localStorage.getItem('favorites')) || [];
 
     if (favoriteMovies.length === 0) {
         favoritesContainer.innerHTML = '<p class="text-center text-xl col-span-3">No favorite movies added yet.</p>';
@@ -26,16 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) throw new Error('Failed to fetch movie details');
             return await response.json();
         } catch (error) {
-            console.error(error);
+            console.error('Error fetching movie details:', error);
         }
     }
 
     function renderMovieCard(movie, notes) {
+        console.log('Rendering movie:', movie, 'with notes:', notes); // Debugging statement
         const movieCard = document.createElement('div');
-        movieCard.classList.add('bg-white', 'p-4', 'rounded', 'shadow-md');
+        movieCard.classList.add('bg-gray-800', 'p-4', 'rounded', 'shadow-md');
 
         const poster = document.createElement('img');
-        const imageSize = "w200";
+        const imageSize = "w300";
         poster.src = 'https://image.tmdb.org/t/p/' + imageSize + movie.poster_path;
         poster.alt = movie.title;
         poster.classList.add('w-30', 'h-auto', 'mx-auto');
@@ -43,33 +44,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const title = document.createElement('h1');
         title.textContent = movie.title;
-        title.classList.add('text-xl', 'font-bold', 'mt-2','text-center');
+        title.classList = "p-4 font-bold text-xl mb-2 text-yellow-400 text-center";
         movieCard.appendChild(title);
 
         const overview = document.createElement('p');
         overview.textContent = movie.overview;
-        overview.classList.add('text-sm', 'mt-2');
+        overview.classList = "text-gray-300 text-base p-4";
         movieCard.appendChild(overview);
 
         const notesLabel = document.createElement('label');
         notesLabel.textContent = 'Personal Notes:';
-        notesLabel.classList.add('block', 'mt-4');
+        notesLabel.classList = "p-4 mb-2 text-yellow-400";
         movieCard.appendChild(notesLabel);
 
         const notesTextarea = document.createElement('textarea');
         notesTextarea.classList.add('w-full', 'border', 'rounded', 'p-2', 'mt-2');
         notesTextarea.value = notes || '';
-        notesTextarea.addEventListener('input', (event) => {
-            const updatedFavorites = favoriteMovies.map(fav => {
+        movieCard.appendChild(notesTextarea);
+
+        const saveButton = document.createElement('button');
+        saveButton.textContent = 'Save';
+        saveButton.classList = "bg-yellow-500 hover:bg-yellow-700 text-gray-900 max-w-fit font-bold py-2 px-4 m-4 rounded";
+        saveButton.addEventListener('click', () => {
+            favoriteMovies = favoriteMovies.map(fav => {
                 if (fav.id === movie.id) {
-                    return { ...fav, notes: event.target.value };
+                    return { ...fav, notes: notesTextarea.value };
                 }
                 return fav;
             });
-            localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            console.log('Updated favorites:', favoriteMovies); // Debugging statement
+            localStorage.setItem('favorites', JSON.stringify(favoriteMovies));
+            saveButton.style.backgroundColor = '#ffb366'; // Change color on click
+            setTimeout(() => {
+                saveButton.style.backgroundColor = ''; // Revert to original color
+            }, 200);
         });
-        movieCard.appendChild(notesTextarea);
+        movieCard.appendChild(saveButton);
+
+        const clearButton = document.createElement('button');
+        clearButton.textContent = 'Clear';
+        clearButton.classList = "bg-yellow-500 hover:bg-yellow-700 text-gray-900 max-w-fit font-bold py-2 px-4 m-4 rounded";
+        clearButton.addEventListener('click', () => {
+            notesTextarea.value = '';
+            favoriteMovies = favoriteMovies.map(fav => {
+                if (fav.id === movie.id) {
+                    return { ...fav, notes: '' };
+                }
+                return fav;
+            });
+            console.log('Cleared favorites:', favoriteMovies); // Debugging statement
+            localStorage.setItem('favorites', JSON.stringify(favoriteMovies));
+            clearButton.style.backgroundColor = '#ffb366'; // Change color on click
+            setTimeout(() => {
+                clearButton.style.backgroundColor = ''; // Revert to original color
+            }, 200);
+        });
+        movieCard.appendChild(clearButton);
+
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove Movie';
+        removeButton.classList = "bg-yellow-500 hover:bg-yellow-700 text-gray-900 max-w-fit font-bold py-2 px-4 m-4 rounded";
+        removeButton.addEventListener('click', () => {
+            favoriteMovies = favoriteMovies.filter(fav => fav.id !== movie.id);
+            console.log('Removed movie:', movie.id); // Debugging statement
+            localStorage.setItem('favorites', JSON.stringify(favoriteMovies));
+            favoritesContainer.removeChild(movieCard);
+        });
+        movieCard.appendChild(removeButton);
+
 
         favoritesContainer.appendChild(movieCard);
     }
 });
+
