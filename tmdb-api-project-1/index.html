@@ -15,8 +15,9 @@
             transition: transform 0.5s ease-in-out;
         }
         .carousel-item {
-            min-width: 33.33%;
+            flex: 0 0 33.33%; /* ширина каждого элемента карусели */
             box-sizing: border-box;
+            max-width: 33.33%;
         }
     </style>
 </head>
@@ -36,7 +37,7 @@
         <!-- Search form -->
         <div class="flex items-center justify-center mb-6">
             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline" id="search" type="text" placeholder="Search for movies...">
-            <button class="ml-2 bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">
+            <button class="ml-2 bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded" id="submit-search">
                 Search
             </button>
         </div>
@@ -44,157 +45,114 @@
         <!-- Movie carousel -->
         <div class="relative">
             <!-- Previous button -->
-            <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">Prev</button>
+            <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded z-10">Prev</button>
+
             <!-- Carousel track -->
             <div class="carousel w-full overflow-hidden">
-                <div class="carousel-track flex">
-                    <!-- Movie cards -->
-                    <div class="carousel-item max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 m-2">
-                        <img class="w-full" src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/iADOJ8Zymht2JPMoy3R7xceZprc.jpg" alt="Movie Image 1">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2 text-yellow-400">Movie Title 1</div>
-                            <p class="text-gray-300 text-base">Some description here.</p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">
-                                Add to Favorites
-                            </button>
-                        </div>
-                    </div>
-                    <div class="carousel-item max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 m-2">
-                        <img class="w-full" src="https://media.themoviedb.org/t/p/w440_and_h660_face/Bf3vCfM94bSJ1saZlyi0UW0e0U.jpg" alt="Movie Image 2">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2 text-yellow-400">Movie Title 2</div>
-                            <p class="text-gray-300 text-base">Some description here.</p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">
-                                Add to Favorites
-                            </button>
-                        </div>
-                    </div>
-                    <div class="carousel-item max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 m-2">
-                        <img class="w-full" src="https://media.themoviedb.org/t/p/w440_and_h660_face/bZlecCuBVvKuarNGvchBwaOsQ3c.jpg" alt="Movie Image 3">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2 text-yellow-400">Movie Title 3</div>
-                            <p class="text-gray-300 text-base">Some description here.</p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">
-                                Add to Favorites
-                            </button>
-                        </div>
-                    </div>
-                    <div class="carousel-item max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 m-2">
-                        <img class="w-full" src="https://media.themoviedb.org/t/p/w440_and_h660_face/7wbPHetLZnyL6hwqrfEPnLNKnXu.jpg" alt="Movie Image 4">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2 text-yellow-400">Movie Title 4</div>
-                            <p class="text-gray-300 text-base">Some description here.</p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">
-                                Add to Favorites
-                            </button>
-                        </div>
-                    </div>
-                    <div class="carousel-item max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 m-2">
-                        <img class="w-full" src="https://media.themoviedb.org/t/p/w440_and_h660_face/gvz0m4MJ8sAj6yMcQdwN07bNjRY.jpg" alt="Movie Image 5">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2 text-yellow-400">Movie Title 5</div>
-                            <p class="text-gray-300 text-base">Some description here.</p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">
-                                Add to Favorites
-                            </button>
-                        </div>
-                    </div>
-                    <div class="carousel-item max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 m-2">
-                        <img class="w-full" src="https://media.themoviedb.org/t/p/w440_and_h660_face/pMWpIPJgL4lYNKxSVMRDFWITeMW.jpg" alt="Movie Image 6">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2 text-yellow-400">Movie Title 6</div>
-                            <p class="text-gray-300 text-base">Some description here.</p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">
-                                Add to Favorites
-                            </button>
-                        </div>
-                    </div>
-                    <div class="carousel-item max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 m-2">
-                        <img class="w-full" src="https://media.themoviedb.org/t/p/w440_and_h660_face/pjnD08FlMAIXsfOLKQbvmO0f0MD.jpg" alt="Movie Image 7">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2 text-yellow-400">Movie Title 7</div>
-                            <p class="text-gray-300 text-base">Some description here.</p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">
-                                Add to Favorites
-                            </button>
-                        </div>
-                    </div>
-                    <div class="carousel-item max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 m-2">
-                        <img class="w-full" src="https://media.themoviedb.org/t/p/w440_and_h660_face/rUcuageYgv9SsJoWuc0seRWG6JC.jpg" alt="Movie Image 8">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2 text-yellow-400">Movie Title 8</div>
-                            <p class="text-gray-300 text-base">Some description here.</p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">
-                                Add to Favorites
-                            </button>
-                        </div>
-                    </div>
-                    <div class="carousel-item max-w-sm rounded overflow-hidden shadow-lg bg-gray-800 m-2">
-                        <img class="w-full" src="https://media.themoviedb.org/t/p/w440_and_h660_face/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg" alt="Movie Image 9">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2 text-yellow-400">Movie Title 9</div>
-                            <p class="text-gray-300 text-base">Some description here.</p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">
-                                Add to Favorites
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <div class="carousel-track flex" id="movie-container"></div>
             </div>
+
             <!-- Next button -->
             <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">Next</button>
         </div>
     </main>
 
     <script>
-        // Selecting carousel elements
-        const track = document.querySelector('.carousel-track');
-        const prevButton = document.getElementById('prev');
-        const nextButton = document.getElementById('next');
-        let currentIndex = 0;
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.querySelector('.carousel-track');
+            const prevButton = document.getElementById('prev');
+            const nextButton = document.getElementById('next');
+            const searchButton = document.getElementById('submit-search');
+            const searchInput = document.getElementById('search');
+            const options = {
+                method: 'GET',
+                headers: {
+                    accept: 'application/json',
+                    Authorization: 'Bearer YOUR_ACCESS_TOKEN_HERE'
+                }
+            };
+            let currentIndex = 0;
 
-        // Function to update carousel position
-        function updateCarousel() {
-            const itemWidth = document.querySelector('.carousel-item').clientWidth;
-            track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-        }
+            async function fetchMovies(url) {
+                try {
+                    const res = await fetch(url, options);
+                    if (!res.ok) throw new Error('Failed to fetch movies');
+                    return await res.json();
+                } catch (error) {
+                    console.error(error);
+                }
+            }
 
-        // Event listener for previous button
-        prevButton.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
+            function renderMovies(movies) {
+                track.innerHTML = '';
+                movies.forEach(movie => {
+                    const movieCard = document.createElement('div');
+                    movieCard.classList = "carousel-item flex flex-col rounded overflow-hidden shadow-lg bg-gray-800 m-2 py-4";
+                    
+                    const poster = document.createElement('img');
+                    const imageSize = "w500";
+                    poster.src = `https://image.tmdb.org/t/p/${imageSize}${movie.poster_path}`;
+                    poster.alt = movie.title;
+                    movieCard.appendChild(poster);
+
+                    const title = document.createElement('h1');
+                    title.textContent = movie.title;
+                    title.classList = "p-4 font-bold text-xl mb-2 text-yellow-400";
+                    movieCard.appendChild(title);
+
+                    const overview = document.createElement('p');
+                    overview.textContent = movie.overview;
+                    overview.classList = "text-gray-300 text-base p-4";
+                    movieCard.appendChild(overview);
+
+                    const favoriteButton = document.createElement('button');
+                    favoriteButton.textContent = "Add to Favorites";
+                    favoriteButton.addEventListener("click", () => {
+                        const previousData = JSON.parse(localStorage.getItem('favorites')) || [];
+                        localStorage.setItem('favorites', JSON.stringify([...previousData, movie]));
+                    });
+                    favoriteButton.classList = "bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold max-w-fit py-2 px-4 m-4 rounded";
+                    movieCard.appendChild(favoriteButton);
+
+                    track.appendChild(movieCard);
+                });
                 updateCarousel();
             }
-        });
 
-        // Event listener for next button
-        nextButton.addEventListener('click', () => {
-            if (currentIndex < track.children.length - 3) {
-                currentIndex++;
-                updateCarousel();
+            function updateCarousel() {
+                const itemWidth = document.querySelector('.carousel-item').clientWidth;
+                track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
             }
-        });
 
-        // Update carousel position on window resize
-        window.addEventListener('resize', updateCarousel);
+            prevButton.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateCarousel();
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                if (currentIndex < track.children.length - 3) {
+                    currentIndex++;
+                    updateCarousel();
+                }
+            });
+
+            window.addEventListener('resize', updateCarousel);
+
+            searchButton.addEventListener('click', async () => {
+                const query = searchInput.value.replaceAll(" ", "%20");
+                const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`;
+                const data = await fetchMovies(url);
+                if (data && data.results) renderMovies(data.results);
+            });
+
+            // Initial load of popular movies
+            const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
+            fetchMovies(url).then(data => {
+                if (data && data.results) renderMovies(data.results);
+            });
+        });
     </script>
 </body>
 </html>
