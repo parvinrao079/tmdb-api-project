@@ -2,6 +2,38 @@ const container = document.getElementById("movie-container");
 const searchButton = document.getElementById("submit-search");
 const searchInput = document.getElementById("search");
 
+
+// Selecting carousel elements
+const track = document.querySelector('.carousel-track');
+const prevButton = document.getElementById('prev');
+const nextButton = document.getElementById('next');
+let currentIndex = 0;
+
+// Function to update carousel position
+function updateCarousel() {
+    const itemWidth = document.querySelector('.carousel-item').clientWidth;
+    track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+}
+
+// Event listener for previous button
+prevButton.addEventListener('click', () => {
+    if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+    }
+});
+
+// Event listener for next button
+nextButton.addEventListener('click', () => {
+    if (currentIndex < track.children.length - 3) {
+        currentIndex++;
+        updateCarousel();
+    }
+});
+
+// Update carousel position on window resize
+window.addEventListener('resize', updateCarousel);
+
 const options = {
     method: 'GET',
     headers: {
@@ -95,34 +127,3 @@ searchButton.addEventListener("click", async () => {
         console.error(error);
     }
 })
-
-// Selecting carousel elements
-const track = document.querySelector('.carousel-track');
-const prevButton = document.getElementById('prev');
-const nextButton = document.getElementById('next');
-let currentIndex = 0;
-
-// Function to update carousel position
-function updateCarousel() {
-    const itemWidth = document.querySelector('.carousel-item').clientWidth;
-    track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-}
-
-// Event listener for previous button
-prevButton.addEventListener('click', () => {
-    if (currentIndex > 0) {
-        currentIndex--;
-        updateCarousel();
-    }
-});
-
-// Event listener for next button
-nextButton.addEventListener('click', () => {
-    if (currentIndex < track.children.length - 3) {
-        currentIndex++;
-        updateCarousel();
-    }
-});
-
-// Update carousel position on window resize
-window.addEventListener('resize', updateCarousel);
