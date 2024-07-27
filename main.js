@@ -21,7 +21,7 @@ const options = {
                 const movieCard = document.createElement("div");
                 movieCard.classList.add('bg-gray-800', 'p-4', 'rounded', 'shadow-md');
                 const poster = document.createElement("img");
-                const imageSize = "w500" //determines the width of the poster
+                const imageSize = "w300" //determines the width of the poster
                 poster.src = 'https://image.tmdb.org/t/p/' + imageSize + element.poster_path;
                 poster.alt = element.title;
                 poster.classList.add('w-30', 'h-auto', 'mx-auto');
