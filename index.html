@@ -5,23 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Movie Diary</title>
+    <style>
+        .carousel {
+            display: flex;
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-item {
+            min-width: 33.33%;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>Your Movie Diary</h1>
+<body class="bg-gray-900 text-white">
+    <!-- Header section -->
+    <header class="bg-gray-800 p-4">
+        <h1 class="text-yellow-400 text-3xl font-bold text-center mb-4">Your Movie Diary</h1>
         <nav>
-            <ul id="navlinks">
-                <li>Home</li>
-                <li><a href="journal.html">Favorites</a></li>
+            <ul id="navlinks" class="flex justify-around">
+                <li><a href="index.html" class="text-yellow-400 hover:underline">Home</a></li>
+                <li><a href="journal.html" class="text-yellow-400 hover:underline">Favorites</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <div id="search-bar">
-            <input id="search" type="text" placeholder="Search for movies here">
-            <button id="submit-search">Search</button>
+    
+    <main class="p-4">
+        <!-- Search form -->
+        <div class="flex items-center justify-center mb-6">
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline" id="search" type="text" placeholder="Search for movies...">
+            <button class="ml-2 bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded" id="submit-search">
+                Search
+            </button>
         </div>
-        <div id="movie-container" class="grid grid-cols-3 gap-4"></div>
+        
+        <!-- Movie carousel -->
+        <div class="relative">
+            <!-- Previous button -->
+            <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">Prev</button>
+            <!-- Carousel track -->
+            <div class="carousel w-full overflow-hidden">
+                <div class="carousel-track flex" id="movie-container">     
+                </div>
+            </div>
+            <!-- Next button -->
+            <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-yellow-500 hover:bg-yellow-700 text-gray-900 font-bold py-2 px-4 rounded">Next</button>
+        </div>
     </main>
     <script src="main.js"></script>
 </body>
